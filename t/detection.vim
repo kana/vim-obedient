@@ -29,4 +29,14 @@ describe 'obedient'
     Expect ConfigurationAfterOpeningFile('t/fixtures/tab.txt')
     \ ==# {'expandtab': 0, 'shiftwidth': 8, 'softtabstop': 0}
   end
+
+  it 'leaves the default style for new file'
+    set expandtab
+    Expect ConfigurationAfterOpeningFile('t/fixtures/Makefile')
+    \ ==# {'expandtab': 0, 'shiftwidth': 8, 'softtabstop': 0}
+    set expandtab&
+
+    Expect ConfigurationAfterOpeningFile('t/fixtures/nothing.py')
+    \ ==# {'expandtab': 1, 'shiftwidth': 4, 'softtabstop': 4}
+  end
 end

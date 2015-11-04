@@ -41,8 +41,41 @@ endfunction
 
 " Misc.  "{{{1
 function! obedient#guess_style(lines)  "{{{2
-  " TODO: Guess style from a:lines.
-  return 0
+  let spaces = copy(a:lines)
+  call map(spaces, 'substitute(v:val, "^\\s*\zs.*", "", "")')
+  call filter(spaces, 'v:val != ""')
+
+  let tabs = len(filter(copy(spaces), 'v:val =~ "^\\t"'))
+  if 0 <= tabs
+    return {
+    \   'expandtab': 0,
+    \   'shiftwidth': 0,
+    \   'softtabstop': 0,
+    \ }
+  endif
+
+  let whites = map(filter(copy(spaces), 'v:val !~ "^\\t"'), 'len(v:val)')
+  let ws2s = filter(copy(whites), 'v:val % 8 == 2 || v:val % 8 == 6')
+  let ws4s = filter(copy(whites), 'v:val % 8 == 4')
+  let ws8s = filter(copy(whites), 'v:val % 8 == 0')
+
+  if ws2s < ws8s && ws4s < ws8s
+    let unit = 8
+  elseif ws2s < ws4s && ws8s <= ws4s
+    let unit = 4
+  elseif ws4s <= ws2s && ws8s <= ws2s
+    let unit = 2
+  else
+    echoerr printf('Failed to guess indentation style(%s/%s/%s/%s)',
+    \              ws2s, ws4s, ws8s, tabs)
+    return 0
+  endif
+
+  return {
+  \   'expandtab': 1,
+  \   'shiftwidth': unit,
+  \   'softtabstop': unit,
+  \ }
 endfunction
 
 

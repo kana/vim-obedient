@@ -47,9 +47,9 @@ function! obedient#guess_style(lines)  "{{{2
 
   let tabs = len(filter(copy(spaces), 'v:val =~ "^\\t"'))
   let whites = map(filter(copy(spaces), 'v:val !~ "^\\t"'), 'len(v:val)')
-  let ws2s = filter(copy(whites), 'v:val % 8 == 2 || v:val % 8 == 6')
-  let ws4s = filter(copy(whites), 'v:val % 8 == 4')
-  let ws8s = filter(copy(whites), 'v:val % 8 == 0')
+  let ws2s = len(filter(copy(whites), 'v:val % 8 == 2 || v:val % 8 == 6'))
+  let ws4s = len(filter(copy(whites), 'v:val % 8 == 4'))
+  let ws8s = len(filter(copy(whites), 'v:val % 8 == 0'))
 
   if len(whites) <= tabs
     return {

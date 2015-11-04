@@ -34,7 +34,7 @@ describe 'obedient'
   it 'leaves the default style for new file'
     set expandtab
     Expect ConfigurationAfterOpeningFile('t/fixtures/Makefile')
-    \ ==# {'expandtab': 0, 'shiftwidth': 0, 'softtabstop': 0}
+    \ ==# {'expandtab': 0, 'shiftwidth': &g:shiftwidth, 'softtabstop': 0}
     set expandtab&
 
     Expect ConfigurationAfterOpeningFile('t/fixtures/nothing.py')

@@ -1,3 +1,4 @@
+filetype plugin indent on
 runtime! plugin/obedient.vim
 
 function! ConfigurationAfterOpeningFile(file_path)

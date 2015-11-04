@@ -42,7 +42,7 @@ endfunction
 " Misc.  "{{{1
 function! obedient#guess_style(lines)  "{{{2
   let spaces = copy(a:lines)
-  call map(spaces, 'substitute(v:val, "^\\s*\zs.*", "", "")')
+  call map(spaces, 'substitute(v:val, "^\\s*\\zs.*", "", "")')
   call filter(spaces, 'v:val != ""')
 
   let tabs = len(filter(copy(spaces), 'v:val =~ "^\\t"'))

@@ -31,8 +31,7 @@ endif
 
 augroup obedient
   autocmd!
-  " TODO: Consider right events to hook.
-  autocmd BufEnter *  call obedient#guess()
+  autocmd BufRead *  call obedient#guess()
 augroup END
 
 
